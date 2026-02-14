@@ -7,7 +7,7 @@ from presenters.login_presenter import LoginPresenter
 from ui.estudiante_view import EstudianteView
 from ui.docente_view import DocenteView
 
-# Contenedor principal de la aplicacion.
+# Controlador principal de la aplicacion.
 # Aquí se administran todas las pantallas y se cambia entre ellas
 # dependiendo del rol del usuario.
 class AppShell(QStackedWidget):
