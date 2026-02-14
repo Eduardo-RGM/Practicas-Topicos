@@ -15,13 +15,14 @@ class DocenteView(QWidget):
         self.setWindowTitle("Ventana Docente")
         self.resize(700, 450)
 
-        # Layout principal directamente sobre self
+        
         layout = QVBoxLayout(self)
 
         self.lbl_bienvenida = QLabel("Bienvenido docente")
         self.lbl_bienvenida.setAlignment(Qt.AlignCenter)
         self.lbl_bienvenida.setStyleSheet("font-size:18px; font-weight:bold;")
 
+        # Lista de alumnos
         self.lista_alumnos = QListWidget()
         self.lista_alumnos.addItems(["Eduardo", "Luis", "Ana"])
 
@@ -51,6 +52,7 @@ class DocenteView(QWidget):
         layout.addWidget(self.txt_aviso)
         layout.addWidget(self.btn_publicar)
 
+    # Metodos que solo emiten eventos hacia otras capas
     def _emit_calificacion(self):
         self.guardarCalificacionRequested.emit(
             self.txt_alumno.text(),

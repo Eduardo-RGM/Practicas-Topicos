@@ -3,10 +3,14 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout
 
 class LoginView(QWidget):
+    
+    # envia usuario y contraseña al presenter
     loginRequested = pyqtSignal(str, str)
 
     def __init__(self):
         super().__init__()
+        
+        # Elementos de la interfaz y configuracion
         self.setWindowTitle("Login - MVP")
         self.resize(360, 200)
 
@@ -33,7 +37,8 @@ class LoginView(QWidget):
 
         self.btn_login = QPushButton("Entrar")
         self.btn_login.clicked.connect(self._emit_login)
-
+        
+        # Agrega todos los elementos al layout
         layout = QVBoxLayout(self)
         layout.addWidget(self.lbl_titulo)
         layout.addSpacing(8)
@@ -43,27 +48,34 @@ class LoginView(QWidget):
         layout.addWidget(self.btn_login)
         layout.addStretch(1)
 
+        # se puede iniciar sesion con enter
         self.txt_usuario.returnPressed.connect(self._emit_login)
         self.txt_password.returnPressed.connect(self._emit_login)
 
+    # Obtiene los datos escritos por el usuario
     def get_credentials(self) -> tuple:
         return self.txt_usuario.text().strip(), self.txt_password.text()
 
+    # Limpia el apartado de la contraseña
     def clear_password(self):
         self.txt_password.clear()
         self.txt_password.setFocus()
 
+    # Si no estan bien las credenciales manda el error
     def show_error(self, message: str):
         self.lbl_titulo.setText(f"❌ {message}")
         self.lbl_titulo.setStyleSheet("font-size: 18px; font-weight: bold; color: #b00020;")
 
+    # Muestra el mensaje si hubo exito
     def show_info(self, message: str):
         self.lbl_titulo.setText(message)
         self.lbl_titulo.setStyleSheet("font-size: 18px; font-weight: bold; color: #1b5e20;")
 
+    # Muestra y oculta la contraseña
     def _toggle_password(self, checked: bool):
         self.txt_password.setEchoMode(QLineEdit.Normal if checked else QLineEdit.Password)
 
+    # señal con los datos del login
     def _emit_login(self):
         user, pw = self.get_credentials()
         self.loginRequested.emit(user, pw)
